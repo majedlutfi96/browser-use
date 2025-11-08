@@ -1,10 +1,11 @@
+from dotenv import load_dotenv
+
+load_dotenv()
 import os
 import secrets
 import uvicorn
 from app import create_app
-from dotenv import load_dotenv
 
-load_dotenv()
 
 # Generate API key if not found in environment
 if not os.getenv("API_KEY"):
