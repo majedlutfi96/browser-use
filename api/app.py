@@ -1,11 +1,15 @@
 from fastapi import FastAPI
-from routers import router as jobs_router
+
+from middleware.auth import CheckApiKeyMiddleware
+from routers.jobs import router as jobs_router
+
 
 def create_app() -> FastAPI:
     """
     Create and configure the FastAPI application.
     """
     app = FastAPI()
+    app.add_middleware(CheckApiKeyMiddleware)
     app.include_router(jobs_router)
 
     @app.get("/health")
@@ -16,4 +20,3 @@ def create_app() -> FastAPI:
         return {"status": "ok"}
 
     return app
-    
