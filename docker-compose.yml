@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  browser-use-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    ports:
+      - "7777:7777"
+    env_file:
+      - .env
+    volumes:
+      - ./jobs:/app/api/jobs
+    restart: unless-stopped
