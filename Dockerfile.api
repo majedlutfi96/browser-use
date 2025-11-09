@@ -183,10 +183,7 @@ RUN --mount=type=cache,target=/root/.cache,sharing=locked,id=cache-$TARGETARCH$T
 
 # Copy the rest of the browser-use codebase
 COPY . /app
-WORKDIR /app/api
 
-RUN uv pip install --requirements pyproject.toml
-RUN chmod +x run_api.sh
 # Install the browser-use package and all of its optional dependencies
 RUN --mount=type=cache,target=/root/.cache,sharing=locked,id=cache-$TARGETARCH$TARGETVARIANT \
   echo "[+] Installing browser-use pip library from source..." \
@@ -206,6 +203,10 @@ RUN mkdir -p "$DATA_DIR/profiles/default" \
 
 
 
+WORKDIR /app/api
+
+RUN uv pip install --requirements pyproject.toml
+RUN chmod +x run_api.sh
 EXPOSE 7777
 
 ENTRYPOINT [ "./run_api.sh" ]
